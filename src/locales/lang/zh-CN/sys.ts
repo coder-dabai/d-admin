@@ -65,8 +65,8 @@ export default {
     signUpFormTitle: '注册',
     forgetFormTitle: '重置密码',
 
-    signInTitle: '开箱即用的中后台管理系统',
-    signInDesc: '输入您的个人详细信息开始使用！',
+    signInTitle: '大白的测试管理系统',
+    signInDesc: 'to be better coder！',
     policy: '我同意xxx隐私政策',
     scanSign: `扫码后点击"确认"，即可完成登录`,
 
