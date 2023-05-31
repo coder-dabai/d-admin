@@ -1,12 +1,14 @@
 <template>
   <PageWrapper title="cavas绘图">
-    <ImgWrapper>
-      <template #content>
-        <div class="flex justify-center">
-          <canvas width="350" height="350" ref="cas"></canvas>
-        </div>
-      </template>
-    </ImgWrapper>
+    <div class="p-2 bg-white flex flex-wrap">
+      <ImgWrapper>
+        <template #content>
+          <div class="flex justify-center">
+            <canvas width="350" height="350" ref="cas"></canvas>
+          </div>
+        </template>
+      </ImgWrapper>
+    </div>
   </PageWrapper>
 </template>
 <script lang="ts" setup>

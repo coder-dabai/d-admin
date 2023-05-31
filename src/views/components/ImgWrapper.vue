@@ -1,5 +1,8 @@
 <template>
-  <div :style="{ width, height }" class="border-solid border-2 border-indigo-600 p-2">
+  <div
+    :style="{ width, height }"
+    class="border-solid border-2 border-indigo-600 p-2 rounded-md shadow-dark-200 shadow-sm"
+  >
     <slot name="content"></slot>
   </div>
 </template>
@@ -15,3 +18,4 @@
     },
   });
 </script>
+<style lang="less" scoped></style>
