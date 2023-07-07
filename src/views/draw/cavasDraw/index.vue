@@ -60,72 +60,89 @@
     };
   };
 
-  // 绘制圆圈百分比加载
-  const circle = ref<any>(null);
-  let circleCtx: any;
-  let centerX;
-  let centerY;
-  let rad; // 圆分为100份
-  let speed;
-  const circleCtxInit = () => {
-    circleCtx = circle.value.getContext('2d');
-    console.log('hahah', circleCtx);
-    centerX = circleCtx.width;
-    centerY = circleCtx.height;
-    rad = (Math.PI * 2) / 100; // 圆分为100份
-    speed = 0.1;
+  // 画个环形动画
+  const circle = ref<HTMLCanvasElement>();
+  const circleInit = () => {
+    let ctx = circle.value!.getContext('2d');
+    getGradient(ctx);
+    drawOutCircle(ctx);
+    drawTextInner(ctx);
+    circleInterval(ctx);
   };
 
-  // 绘制文本
-  const drawCircleText = (n) => {
-    circleCtx.fillStyle = '#F47C7C';
-    circleCtx.font = '40px Arial';
-    circleCtx.textAlign = 'center';
-    circleCtx.textBaseline = 'middle';
-    circleCtx.fillText(n.toFixed(0) + '%', centerX, centerY);
-    console.log('绘制文本');
+  // 绘制浅色外圈
+  const drawOutCircle = (ctx) => {
+    ctx.lineWidth = 10;
+    ctx.strokeStyle = '#F0F0F0';
+    ctx.beginPath();
+    ctx.arc(100, 100, 80, 0, 2 * Math.PI);
+    ctx.fillStyle = 'red';
+    ctx.stroke();
   };
 
-  // 绘制蓝色外圈
-  const drawBlueCircle = (n) => {
-    circleCtx.beginPath();
-    circleCtx.strokeStyle = '#49f';
-    circleCtx.lineWidth = 12;
-    circleCtx.arc(centerX, centerY, 100, -Math.PI / 2, -Math.PI / 2 + n * rad, false);
-    circleCtx.stroke();
-    console.log('绘制蓝色外圈');
+  // 绘制中间文本
+  const drawTextInner = (ctx, num = 0) => {
+    ctx.clearRect(60, 90, 100, 50);
+    ctx.fillStyle = '#000000';
+    ctx.font = '20px Arial';
+    ctx.fillText(num + 's', 85, 110);
   };
 
-  // 绘制白色外圈
-  const drawWhiteCiecle = () => {
-    circleCtx.beginPath();
-    circleCtx.strokeStyle = '#A5DEF1';
-    circleCtx.lineWidth = 12;
-    circleCtx.arc(centerX, centerY, 100, 0, Math.PI * 2, false);
-    circleCtx.stroke();
-    circleCtx.closePath();
-    console.log('绘制白色外圈');
+  let my_gradient1;
+  let my_gradient2;
+  const getGradient = (ctx) => {
+    my_gradient1 = ctx.createLinearGradient(100, 20, 180, 180);
+    my_gradient1.addColorStop(0, '#66B3FF');
+    my_gradient1.addColorStop(1, '#46A3FF');
+    my_gradient2 = ctx.createLinearGradient(100, 180, 0, 0);
+    my_gradient2.addColorStop(0, '#46A3FF');
+    my_gradient2.addColorStop(1, '#2894FF');
   };
 
-  const drawCircelLoading = () => {
-    console.log('111');
-    window.requestAnimationFrame(drawCircelLoading);
-    circleCtx.clearRect(0, 0, circleCtx.width, circleCtx.height);
+  // 绘制进度圈
+  const drawPendingCircle = (ctx, num) => {
+    if (num === 0) {
+      return;
+    }
 
-    drawWhiteCiecle();
-    drawCircleText(speed);
-    drawBlueCircle(speed);
+    if (num <= 15) {
+      ctx.strokeStyle = my_gradient1;
+      ctx.beginPath();
+      ctx.arc(100, 100, 80, 1.5 * Math.PI, (1.5 + (0.5 / 15) * num) * Math.PI, false);
+      ctx.stroke();
+      return;
+    }
 
-    if (speed > 100) speed = 0;
-    speed += 0.1;
-    console.log('结束');
+    if (num > 15 && num <= 30) {
+      ctx.strokeStyle = my_gradient1;
+      ctx.beginPath();
+      ctx.arc(100, 100, 80, 2 * Math.PI, ((0.5 * (num - 15)) / 15) * Math.PI, false);
+      ctx.stroke();
+      return;
+    }
+
+    // 超过180
+    ctx.strokeStyle = my_gradient2;
+    ctx.beginPath();
+    ctx.arc(100, 100, 80, 0.5 * Math.PI, (0.5 + (1 / 30) * (num - 30)) * Math.PI, false);
+    ctx.stroke();
+  };
+
+  let circleTimer;
+  const circleInterval = (ctx) => {
+    let num = 0;
+    circleTimer = setInterval(() => {
+      num++;
+      drawTextInner(ctx, num);
+      drawPendingCircle(ctx, num);
+      if (num === 60) {
+        clearInterval(circleTimer);
+      }
+    }, 1000);
   };
 
   onMounted(() => {
     drawPoster();
-    circleCtxInit();
-    setTimeout(() => {
-      drawCircelLoading();
-    }, 1000);
+    circleInit();
   });
 </script>
