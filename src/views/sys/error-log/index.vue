@@ -18,9 +18,7 @@
       </template>
       <template #action="{ record }">
         <TableAction
-          :actions="[
-            { label: t('sys.errorLog.tableActionDesc'), onClick: handleDetail.bind(null, record) },
-          ]"
+          :actions="[{ label: t('sys.errorLog.tableActionDesc'), onClick: handleDetail.bind(null, record) }]"
         />
       </template>
     </BasicTable>
@@ -59,14 +57,14 @@
 
   watch(
     () => errorLogStore.getErrorLogInfoList,
-    (list) => {
+    list => {
       nextTick(() => {
         setTableData(cloneDeep(list));
       });
     },
     {
       immediate: true,
-    },
+    }
   );
   const { createMessage } = useMessage();
   if (import.meta.env.DEV) {
