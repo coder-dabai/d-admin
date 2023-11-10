@@ -18,7 +18,12 @@
       </template>
       <template #action="{ record }">
         <TableAction
-          :actions="[{ label: t('sys.errorLog.tableActionDesc'), onClick: handleDetail.bind(null, record) }]"
+          :actions="[
+            {
+              label: t('sys.errorLog.tableActionDesc'),
+              onClick: handleDetail.bind(null, record),
+            },
+          ]"
         />
       </template>
     </BasicTable>
@@ -26,7 +31,7 @@
 </template>
 
 <script lang="ts" setup>
-  import type { ErrorLogInfo } from '/#/store';
+   import type { ErrorLogInfo } from '/#/store';
   import { watch, ref, nextTick } from 'vue';
   import DetailModal from './DetailModal.vue';
   import { BasicTable, useTable, TableAction } from '/@/components/Table/index';

@@ -18,7 +18,7 @@ module.exports = {
   extends: [
     'plugin:vue/vue3-recommended',
     'plugin:@typescript-eslint/recommended',
-    'plugin:prettier/recommended',
+    'plugin:prettier/recommended', // 将它置于最后 不会被覆盖
   ],
   rules: {
     'vue/script-setup-uses-vars': 'error',
