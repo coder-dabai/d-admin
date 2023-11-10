@@ -11,7 +11,7 @@
   import { AppProvider } from '/@/components/Application';
   import { useTitle } from '/@/hooks/web/useTitle';
   import { useLocale } from '/@/locales/useLocale';
-
+  console.log('233');
   import 'dayjs/locale/zh-cn';
   // support Multi-language
   const { getAntdLocale } = useLocale();
