@@ -4,8 +4,9 @@ import { LoginParams, LoginResultModel, GetUserInfoModel } from './model/userMod
 import { ErrorMessageMode } from '/#/axios';
 
 enum Api {
-  Login = '/login',
+  Login = '/user/login',
   Logout = '/logout',
+  register = '/user/register',
   GetUserInfo = '/getUserInfo',
   GetPermCode = '/getPermCode',
   TestRetry = '/testRetry',
@@ -22,7 +23,22 @@ export function loginApi(params: LoginParams, mode: ErrorMessageMode = 'modal') 
     },
     {
       errorMessageMode: mode,
+    }
+  );
+}
+
+/**
+ * @description: user register api
+ */
+export function registerApi(params: any, mode: ErrorMessageMode = 'modal') {
+  return defHttp.post(
+    {
+      url: Api.register,
+      params,
     },
+    {
+      errorMessageMode: mode,
+    }
   );
 }
 
@@ -50,6 +66,6 @@ export function testRetry() {
         count: 5,
         waitTime: 1000,
       },
-    },
+    }
   );
 }
