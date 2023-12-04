@@ -18,7 +18,6 @@
       </FormItem>
 
       <FormItem class="enter-x" name="policy">
-        <!-- No logic, you need to deal with it yourself -->
         <Checkbox v-model:checked="formData.policy" size="small">
           {{ t('sys.login.policy') }}
         </Checkbox>
@@ -43,6 +42,7 @@
   import { registerApi } from '/@/api/sys/user';
   import md5 from 'crypto-js/md5';
 
+  console.log('测试');
   const FormItem = Form.Item;
   const InputPassword = Input.Password;
   const { t } = useI18n();
