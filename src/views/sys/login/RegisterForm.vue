@@ -42,7 +42,6 @@
   import { registerApi } from '/@/api/sys/user';
   import md5 from 'crypto-js/md5';
 
-  console.log('测试');
   const FormItem = Form.Item;
   const InputPassword = Input.Password;
   const { t } = useI18n();
