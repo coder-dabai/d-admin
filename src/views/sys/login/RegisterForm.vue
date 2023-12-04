@@ -2,36 +2,11 @@
   <template v-if="getShow">
     <LoginFormTitle class="enter-x" />
     <Form class="p-4 enter-x" :model="formData" :rules="getFormRules" ref="formRef">
-      <FormItem name="account" class="enter-x">
-        <Input
-          class="fix-auto-fill"
-          size="large"
-          v-model:value="formData.account"
-          :placeholder="t('sys.login.userName')"
-        />
-      </FormItem>
-      <FormItem name="mobile" class="enter-x">
-        <Input
-          size="large"
-          v-model:value="formData.mobile"
-          :placeholder="t('sys.login.mobile')"
-          class="fix-auto-fill"
-        />
-      </FormItem>
-      <FormItem name="sms" class="enter-x">
-        <CountdownInput
-          size="large"
-          class="fix-auto-fill"
-          v-model:value="formData.sms"
-          :placeholder="t('sys.login.smsCode')"
-        />
+      <FormItem name="username" class="enter-x">
+        <Input class="fix-auto-fill" size="large" v-model:value="formData.username" placeholder="用户名" />
       </FormItem>
       <FormItem name="password" class="enter-x">
-        <StrengthMeter
-          size="large"
-          v-model:value="formData.password"
-          :placeholder="t('sys.login.password')"
-        />
+        <StrengthMeter size="large" v-model:value="formData.password" :placeholder="t('sys.login.password')" />
       </FormItem>
       <FormItem name="confirmPassword" class="enter-x">
         <InputPassword
@@ -49,14 +24,7 @@
         </Checkbox>
       </FormItem>
 
-      <Button
-        type="primary"
-        class="enter-x"
-        size="large"
-        block
-        @click="handleRegister"
-        :loading="loading"
-      >
+      <Button type="primary" class="enter-x" size="large" block @click="handleRegister" :loading="loading">
         {{ t('sys.login.registerButton') }}
       </Button>
       <Button size="large" block class="mt-4 enter-x" @click="handleBackLogin">
@@ -68,11 +36,12 @@
 <script lang="ts" setup>
   import { reactive, ref, unref, computed } from 'vue';
   import LoginFormTitle from './LoginFormTitle.vue';
-  import { Form, Input, Button, Checkbox } from 'ant-design-vue';
+  import { Form, Input, Button, Checkbox, message } from 'ant-design-vue';
   import { StrengthMeter } from '/@/components/StrengthMeter';
-  import { CountdownInput } from '/@/components/CountDown';
   import { useI18n } from '/@/hooks/web/useI18n';
   import { useLoginState, useFormRules, useFormValid, LoginStateEnum } from './useLogin';
+  import { registerApi } from '/@/api/sys/user';
+  import md5 from 'crypto-js/md5';
 
   const FormItem = Form.Item;
   const InputPassword = Input.Password;
@@ -83,11 +52,9 @@
   const loading = ref(false);
 
   const formData = reactive({
-    account: '',
+    username: '',
     password: '',
     confirmPassword: '',
-    mobile: '',
-    sms: '',
     policy: false,
   });
 
@@ -100,5 +67,14 @@
     const data = await validForm();
     if (!data) return;
     console.log(data);
+    loading.value = true;
+    try {
+      await registerApi({
+        username: data.username,
+        password: md5(data.password).toString(),
+      });
+      message.success('注册成功!');
+    } catch (error) {}
+    loading.value = false;
   }
 </script>

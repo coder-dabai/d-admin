@@ -5,7 +5,7 @@ export function createFakeUserList() {
   return [
     {
       userId: '1',
-      username: 'admin',
+      username: 'dg',
       realName: '大白',
       avatar: 'https://q1.qlogo.cn/g?b=qq&nk=190848757&s=640',
       desc: 'manager',
@@ -51,9 +51,7 @@ export default [
     method: 'post',
     response: ({ body }) => {
       const { username, password } = body;
-      const checkUser = createFakeUserList().find(
-        (item) => item.username === username && password === item.password,
-      );
+      const checkUser = createFakeUserList().find(item => item.username === username && password === item.password);
       if (!checkUser) {
         return resultError('Incorrect account or password！');
       }
@@ -74,7 +72,8 @@ export default [
     response: (request: requestParams) => {
       const token = getRequestToken(request);
       if (!token) return resultError('Invalid token');
-      const checkUser = createFakeUserList().find((item) => item.token === token);
+      // const checkUser = createFakeUserList().find((item) => item.token === token);
+      const checkUser = createFakeUserList()[0];
       if (!checkUser) {
         return resultError('The corresponding user information was not obtained!');
       }
@@ -88,7 +87,7 @@ export default [
     response: (request: requestParams) => {
       const token = getRequestToken(request);
       if (!token) return resultError('Invalid token');
-      const checkUser = createFakeUserList().find((item) => item.token === token);
+      const checkUser = createFakeUserList().find(item => item.token === token);
       if (!checkUser) {
         return resultError('Invalid token!');
       }
@@ -104,7 +103,7 @@ export default [
     response: (request: requestParams) => {
       const token = getRequestToken(request);
       if (!token) return resultError('Invalid token');
-      const checkUser = createFakeUserList().find((item) => item.token === token);
+      const checkUser = createFakeUserList().find(item => item.token === token);
       if (!checkUser) {
         return resultError('Invalid token!');
       }
