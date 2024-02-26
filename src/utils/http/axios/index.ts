@@ -120,10 +120,7 @@ const transform: AxiosTransform = {
           config.params = undefined;
         }
         if (joinParamsToUrl) {
-          config.url = setObjToUrlParams(
-            config.url as string,
-            Object.assign({}, config.params, config.data),
-          );
+          config.url = setObjToUrlParams(config.url as string, Object.assign({}, config.params, config.data));
         }
       } else {
         // 兼容restful风格
@@ -144,7 +141,7 @@ const transform: AxiosTransform = {
       // jwt token
       (config as Recordable).headers.Authorization = options.authenticationScheme
         ? `${options.authenticationScheme} ${token}`
-        : token;
+        : `Bearer ${token}`;
     }
     return config;
   },
@@ -250,8 +247,8 @@ function createAxios(opt?: Partial<CreateAxiosOptions>) {
           },
         },
       },
-      opt || {},
-    ),
+      opt || {}
+    )
   );
 }
 export const defHttp = createAxios();

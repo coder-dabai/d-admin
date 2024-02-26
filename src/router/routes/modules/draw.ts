@@ -21,6 +21,14 @@ const draw: AppRouteModule = {
         title: 'cavas绘画',
       },
     },
+    {
+      path: 'city',
+      name: 'city',
+      component: () => import('/@/views/draw/city/index.vue'),
+      meta: {
+        title: '城市',
+      },
+    },
   ],
 };
 
