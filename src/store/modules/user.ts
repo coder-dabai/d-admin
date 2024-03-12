@@ -86,7 +86,7 @@ export const useUserStore = defineStore({
       params: LoginParams & {
         goHome?: boolean;
         mode?: ErrorMessageMode;
-      },
+      }
     ): Promise<GetUserInfoModel | null> {
       try {
         const { goHome = true, mode, ...loginParams } = params;
@@ -112,7 +112,7 @@ export const useUserStore = defineStore({
         const permissionStore = usePermissionStore();
         if (!permissionStore.isDynamicAddedRoute) {
           const routes = await permissionStore.buildRoutesAction();
-          routes.forEach((route) => {
+          routes.forEach(route => {
             router.addRoute(route as unknown as RouteRecordRaw);
           });
           router.addRoute(PAGE_NOT_FOUND_ROUTE as unknown as RouteRecordRaw);
@@ -127,7 +127,7 @@ export const useUserStore = defineStore({
       const userInfo = await getUserInfo();
       const { roles = [] } = userInfo;
       if (isArray(roles)) {
-        const roleList = roles.map((item) => item.value) as RoleEnum[];
+        const roleList = roles.map(item => item.value) as RoleEnum[];
         this.setRoleList(roleList);
       } else {
         userInfo.roles = [];

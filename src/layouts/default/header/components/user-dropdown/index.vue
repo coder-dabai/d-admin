@@ -4,7 +4,7 @@
       <img :class="`${prefixCls}__header`" :src="getUserInfo.avatar" />
       <span :class="`${prefixCls}__info hidden md:block`">
         <span :class="`${prefixCls}__name  `" class="truncate">
-          {{ getUserInfo.realName }}
+          {{ getUserInfo.username }}
         </span>
       </span>
     </span>
@@ -24,11 +24,7 @@
           :text="t('layout.header.tooltipLock')"
           icon="ion:lock-closed-outline"
         />
-        <MenuItem
-          key="logout"
-          :text="t('layout.header.dropdownItemLoginOut')"
-          icon="ion:power-outline"
-        />
+        <MenuItem key="logout" :text="t('layout.header.dropdownItemLoginOut')" icon="ion:power-outline" />
       </Menu>
     </template>
   </Dropdown>
@@ -74,9 +70,9 @@
       const { getShowDoc, getUseLockPage } = useHeaderSetting();
       const userStore = useUserStore();
 
-      const getUserInfo = computed(() => {
-        const { realName = '', avatar, desc } = userStore.getUserInfo || {};
-        return { realName, avatar: avatar || headerImg, desc };
+      const getUserInfo: any = computed(() => {
+        const { username = '', avatar, desc } = userStore.getUserInfo || {};
+        return { username, avatar: avatar || headerImg, desc };
       });
 
       const [register, { openModal }] = useModal();

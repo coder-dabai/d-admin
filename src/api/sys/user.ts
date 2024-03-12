@@ -7,7 +7,7 @@ enum Api {
   Login = '/user/login',
   Logout = '/logout',
   register = '/user/register',
-  GetUserInfo = '/getUserInfo',
+  GetUserInfo = '/user/getUserInfo',
   GetPermCode = '/getPermCode',
   TestRetry = '/testRetry',
 }
@@ -46,7 +46,7 @@ export function registerApi(params: any, mode: ErrorMessageMode = 'modal') {
  * @description: getUserInfo
  */
 export function getUserInfo() {
-  return defHttp.get<GetUserInfoModel>({ url: Api.GetUserInfo }, { errorMessageMode: 'none' });
+  return defHttp.post<GetUserInfoModel>({ url: Api.GetUserInfo }, { errorMessageMode: 'none' });
 }
 
 export function getPermCode() {
